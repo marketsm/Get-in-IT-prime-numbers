@@ -13,11 +13,6 @@ import java.util.stream.IntStream;
  */
 public class SieveOfAtkin {
 
-	public static void main(String[] args) {
-		SieveOfAtkin.getPrimes(100000);
-
-	}
-
 	public static void getPrimes(int limit) {
 
 		Map<Integer, Boolean> sieve = new HashMap<Integer, Boolean>();
@@ -30,7 +25,7 @@ public class SieveOfAtkin {
 			primes.add(2);
 			primes.add(3);
 		} else if (limit < 6) {
-			addStartValuestoList(primes);
+			addStartValuesToList(primes);
 		} else {
 
 			// Main falls limit > 5
@@ -40,7 +35,7 @@ public class SieveOfAtkin {
 
 		}
 
-		// System.out.println("Primzahlen = " + primes);
+		System.out.println("Primzahlen = " + primes);
 		System.out.println("Anzahl = " + primes.size());
 
 	}
@@ -48,7 +43,7 @@ public class SieveOfAtkin {
 	/*
 	 * Siehe Wikipedia Algorithmus Schritt 1
 	 */
-	private static void addStartValuestoList(List<Integer> primes) {
+	private static void addStartValuesToList(List<Integer> primes) {
 		primes.add(2);
 		primes.add(3);
 		primes.add(5);
@@ -96,7 +91,7 @@ public class SieveOfAtkin {
 	 * Siehe Wikipedia Algorithmus Schritt 4 -8
 	 */
 	private static List<Integer> markMulipleOfPrimes(Map<Integer, Boolean> sieve, List<Integer> primes,int limit) {
-		addStartValuestoList(primes);
+		addStartValuesToList(primes);
 		for (int i = 1; i <= sieve.size(); i++) {
 			if (sieve.get(i)) {
 				primes.add(i);
