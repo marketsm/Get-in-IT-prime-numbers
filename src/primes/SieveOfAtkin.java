@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 /*
  * Der Algorithmus ist von https://de.wikipedia.org/wiki/Sieb_von_Atkin.
  * 
- * L�sung Implimeniter von Christoph Marketsm�ller Geb. 01.04.1993 am 19.02.2017 
+ * Lösung Implimeniter von Christoph Marketsmüller Geb. 01.04.1993 am 19.02.2017 
  */
 public class SieveOfAtkin {
 
@@ -41,7 +41,7 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * Siehe Wikipedia Algorithmus Schritt 1
+	 * Erstelle eine mit 2, 3 und 5 gefüllte Ergebnisliste.
 	 */
 	private static void addStartValuesToList(List<Integer> primes) {
 		primes.add(2);
@@ -50,7 +50,8 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * Siehe Wikipedia Algorithmus Schritt 2
+	 * Erstelle eine Siebliste mit einem Eintrag für jede positive ganze Zahl;
+	 * alle Einträge dieser Liste werden am Anfang als nicht-prim markiert.
 	 */
 	private static Map<Integer, Boolean> createSieveMap(int limit) {
 		Map<Integer, Boolean> sieve = new HashMap<Integer, Boolean>();
@@ -61,7 +62,8 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * Siehe Wikipedia Algorithmus Schritt 3
+	 * Starten der Inventierung. Auswahl der mod(Vier, Sechs oder Zwölf)
+	 * Methode.
 	 */
 	private static void inversion(Map<Integer, Boolean> sieve) {
 		int[] modFourRestOne = { 1, 13, 17, 29, 37, 41, 49, 53 };
@@ -88,9 +90,15 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * Siehe Wikipedia Algorithmus Schritt 4 -8
+	 * Füllt die Liste der Primzahlen auf.
+	 *  Vorgehen:
+	 *  - Hinzufügen der Startwerte (2, 3, 5) in die Primzahlenliste
+	 *  - Starte mit der niedrigsten Zahl in der Siebliste
+	 *  - Nimm die nächste Zahl in der Siebliste, die immer noch als prim markiert ist
+	 *  - Füge die Zahl in die Ergebnisliste ein 
+	 *  - Quadriere die Zahl und markiere alle Vielfachen von diesem Quadrat als nicht-prim
 	 */
-	private static List<Integer> markMulipleOfPrimes(Map<Integer, Boolean> sieve, List<Integer> primes,int limit) {
+	private static List<Integer> markMulipleOfPrimes(Map<Integer, Boolean> sieve, List<Integer> primes, int limit) {
 		addStartValuesToList(primes);
 		for (int i = 1; i <= sieve.size(); i++) {
 			if (sieve.get(i)) {
@@ -105,9 +113,8 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * 
-	 * Siehe Wikipedia Algorithmus Schritt 3 Unterpunkte 1
-	 * 
+	 * Falls der Eintrag eine Zahl mit Rest 1, 13, 17, 29, 37, 41, 49 oder 53
+	 * enthält, invertiere ihn für jede mögliche Lösung der Gleichung: 4x² + y² = n
 	 */
 	private static int getPossibleSolutionsByModFour(int result) {
 		double breakLoop = Math.sqrt(result);
@@ -124,9 +131,8 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * 
-	 * Siehe Wikipedia Algorithmus Schritt 3 Unterpunkte 2
-	 * 
+	 * Falls der Eintrag eine Zahl mit Rest 7, 19, 31 oder 43 enthält,
+	 * invertiere ihn für jede mögliche Lösung der Gleichung: 3x² + y² = n
 	 */
 	private static int getPossibleSolutionsByModSix(int result) {
 		double breakLoop = Math.sqrt(result);
@@ -143,9 +149,9 @@ public class SieveOfAtkin {
 	}
 
 	/*
-	 * 
-	 * Siehe Wikipedia Algorithmus Schritt 3 Unterpunkte 3
-	 * 
+	 * Falls der Eintrag eine Zahl mit Rest 11, 23, 47 oder 59 enthält,
+	 * invertiere ihn für jede mögliche Lösung der Gleichung: 3x² − y² = n,
+	 * wobei x > y
 	 */
 	private static int getPossibleSolutionsByModTwelve(int result) {
 		double calculation = 0;
